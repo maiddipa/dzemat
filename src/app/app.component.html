@@ -10,23 +10,23 @@
 
   <nav class="nav-links">
 
-    <a routerLink="/">Aktuelnosti</a>
+    <a routerLink="/">{{i18n.t('home')}}</a>
 
     <a routerLink="/about">
-      O nama
+      {{i18n.t('about')}}
     </a>
 
     @if (auth.isLoggedIn()) {
 
       <a routerLink="/upload">
-        Upload
+        {{i18n.t('upload')}}
       </a>
 
       <button
         type="button"
         (click)="auth.logout()"
       >
-        Logout
+        {{i18n.t('logout')}}
       </button>
 
       @if (auth.user()?.picture) {
@@ -40,11 +40,12 @@
     } @else {
 
       <a routerLink="/login">
-        Sign in with Google
+        {{i18n.t('login')}}
       </a>
 
     }
 
+    <app-language-switcher></app-language-switcher>
   </nav>
 
 </header>
@@ -52,3 +53,4 @@
 <main class="shell">
   <router-outlet></router-outlet>
 </main>
+<footer class="legal-footer"><a href="/datenschutz.html">Datenschutz</a><a href="/impressum.html">Impressum</a></footer>
