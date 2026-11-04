@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import '../i18n/dzemat_locale_controller.dart';
 
 import '../models/cloudinary_image.dart';
 import '../services/cloudinary_service.dart';
@@ -423,7 +424,7 @@ class _GalleryPageState
 
         actions: [
           IconButton(
-            tooltip: 'Osvježi',
+            tooltip: DzematLocaleController.instance.isGerman ? 'Aktualisieren' : 'Osvježi',
 
             onPressed:
                 _isLoading
