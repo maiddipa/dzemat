@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { DzematI18nService } from '../../shared/dzemat-i18n.service';
-import { ContactsSectionComponent } from '../../shared/contacts-section.component';
+import { DzematContactsComponent } from '../../shared/contacts-section.component';
 
 import {
   CommonModule
@@ -11,7 +11,7 @@ import {
   standalone: true,
   imports: [
     CommonModule,
-    ContactsSectionComponent
+    DzematContactsComponent
   ],
   templateUrl: './about.component.html',
   styleUrl: './about.component.css'
