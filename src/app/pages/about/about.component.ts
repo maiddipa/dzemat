@@ -1,6 +1,6 @@
-import {
-  Component
-} from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { DzematI18nService } from '../../shared/dzemat-i18n.service';
+import { ContactsSectionComponent } from '../../shared/contacts-section.component';
 
 import {
   CommonModule
@@ -10,12 +10,14 @@ import {
   selector: 'app-about',
   standalone: true,
   imports: [
-    CommonModule
+    CommonModule,
+    ContactsSectionComponent
   ],
   templateUrl: './about.component.html',
   styleUrl: './about.component.css'
 })
 export class AboutComponent {
+  readonly i18n=inject(DzematI18nService);
 
   readonly mosque = {
     name: 'Džemat Bochum',
@@ -24,10 +26,10 @@ export class AboutComponent {
       + 'Organizujemo namaze, mektebsku nastavu, predavanja, '
       + 'druženja i humanitarne aktivnosti.',
 
-    address: 'Primjerstraße 10, 44787 Bochum',
-    phone: '+49 123 4567890',
-    email: 'info@dzemat-bochum.de',
-    website: 'https://dzemat-bochum.de',
+    address: 'Hochstraße 92, 44866 Bochum',
+    phone: '0177 7540425',
+    email: 'ikc-bb@outlook.de',
+    website: 'https://dzematbochum.de',
 
     facebook:
       'https://www.facebook.com/',
@@ -39,14 +41,9 @@ export class AboutComponent {
       'https://www.paypal.com/donate'
   };
 
-  readonly activities: string[] = [
-    'Dnevni namazi',
-    'Džuma-namaz',
-    'Mektebska nastava',
-    'Predavanja',
-    'Druženja',
-    'Humanitarne aktivnosti'
-  ];
+  readonly activities = [
+    'prayer', 'friday', 'school', 'talks', 'meetings', 'charity'
+  ] as const;
 
   openLink(url: string): void {
     window.open(
@@ -86,8 +83,6 @@ export class AboutComponent {
   }
 
   donate(): void {
-    this.openLink(
-      this.mosque.paypal
-    );
+    this.openEmail();
   }
 }
