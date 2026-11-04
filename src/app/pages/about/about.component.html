@@ -1,0 +1,262 @@
+<main class="about-page">
+
+  <section class="hero">
+
+    <div class="hero-content">
+
+      <span class="eyebrow">
+        Dobro došli
+      </span>
+
+      <h1>
+        {{ mosque.name }}
+      </h1>
+
+      <p>
+        {{ mosque.description }}
+      </p>
+
+      <div class="hero-actions">
+
+        <button
+          type="button"
+          class="primary-button"
+          (click)="openMap()"
+        >
+          Prikaži lokaciju
+        </button>
+
+        <button
+          type="button"
+          class="donate-button"
+          (click)="donate()"
+        >
+          Doniraj putem PayPala
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <section class="content-section">
+
+    <article class="card">
+
+      <h2>
+        O našem džematu
+      </h2>
+
+      <p>
+        Naš cilj je njegovanje islamskih
+        vrijednosti, zajedništva i međusobnog
+        pomaganja.
+      </p>
+
+      <p>
+        Posebnu pažnju posvećujemo djeci,
+        mladima i porodicama kroz obrazovne,
+        vjerske i društvene aktivnosti.
+      </p>
+
+    </article>
+
+
+    <article class="card">
+
+      <h2>
+        Naše aktivnosti
+      </h2>
+
+      <ul class="activities">
+
+        <li
+          *ngFor="
+            let activity of activities
+          "
+        >
+          <span class="check">
+            ✓
+          </span>
+
+          {{ activity }}
+        </li>
+
+      </ul>
+
+    </article>
+
+  </section>
+
+
+  <section class="contact-section">
+
+    <header>
+
+      <span class="eyebrow">
+        Kontakt
+      </span>
+
+      <h2>
+        Posjetite nas ili nam se javite
+      </h2>
+
+    </header>
+
+
+    <div class="contact-grid">
+
+      <button
+        type="button"
+        class="contact-card"
+        (click)="openMap()"
+      >
+
+        <span class="contact-icon">
+          📍
+        </span>
+
+        <span class="contact-label">
+          Adresa
+        </span>
+
+        <strong>
+          {{ mosque.address }}
+        </strong>
+
+      </button>
+
+
+      <button
+        type="button"
+        class="contact-card"
+        (click)="openPhone()"
+      >
+
+        <span class="contact-icon">
+          ☎
+        </span>
+
+        <span class="contact-label">
+          Telefon
+        </span>
+
+        <strong>
+          {{ mosque.phone }}
+        </strong>
+
+      </button>
+
+
+      <button
+        type="button"
+        class="contact-card"
+        (click)="openEmail()"
+      >
+
+        <span class="contact-icon">
+          ✉
+        </span>
+
+        <span class="contact-label">
+          E-mail
+        </span>
+
+        <strong>
+          {{ mosque.email }}
+        </strong>
+
+      </button>
+
+
+      <button
+        type="button"
+        class="contact-card"
+        (click)="
+          openLink(mosque.website)
+        "
+      >
+
+        <span class="contact-icon">
+          🌐
+        </span>
+
+        <span class="contact-label">
+          Web-stranica
+        </span>
+
+        <strong>
+          dzemat-bochum.de
+        </strong>
+
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <section class="donation-section">
+
+    <div>
+
+      <span class="eyebrow light">
+        Podržite naš rad
+      </span>
+
+      <h2>
+        Vaša donacija pomaže džematu
+      </h2>
+
+      <p>
+        Donacije koristimo za održavanje
+        prostorija, mektebsku nastavu i
+        humanitarne aktivnosti.
+      </p>
+
+    </div>
+
+    <button
+      type="button"
+      class="donation-large"
+      (click)="donate()"
+    >
+      Doniraj putem PayPala
+    </button>
+
+  </section>
+
+
+  <section class="social-section">
+
+    <h2>
+      Pratite nas
+    </h2>
+
+    <div class="social-buttons">
+
+      <button
+        type="button"
+        (click)="
+          openLink(mosque.facebook)
+        "
+      >
+        Facebook
+      </button>
+
+      <button
+        type="button"
+        (click)="
+          openLink(mosque.instagram)
+        "
+      >
+        Instagram
+      </button>
+
+    </div>
+
+  </section>
+
+</main>

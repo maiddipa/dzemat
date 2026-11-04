@@ -1,0 +1,308 @@
+<main class="upload-page">
+  <section class="upload-card">
+
+    <header class="upload-header">
+      <span class="eyebrow">
+        Džemat Bochum
+      </span>
+
+      <h1>
+        Upload slika
+      </h1>
+
+      <p>
+        Možete izabrati više slika odjednom.
+        Maksimalno 8 MB po slici.
+      </p>
+    </header>
+
+
+    <!-- PORUKE -->
+
+    <div
+      *ngIf="error()"
+      class="message error-message"
+      role="alert"
+    >
+      {{ error() }}
+    </div>
+
+    <div
+      *ngIf="success()"
+      class="message success-message"
+    >
+      {{ success() }}
+    </div>
+
+
+    <form
+      #uploadForm="ngForm"
+      (ngSubmit)="submit()"
+      class="upload-form"
+    >
+
+      <!-- NOVI FOLDER -->
+
+      <div class="form-group">
+        <label for="newFolderName">
+          Novi folder
+        </label>
+
+        <div class="folder-create-row">
+          <input
+            id="newFolderName"
+            name="newFolderName"
+            type="text"
+            [(ngModel)]="newFolderName"
+            maxlength="100"
+            placeholder="Naziv novog foldera"
+            [disabled]="busy()"
+          />
+
+          <button
+            type="button"
+            class="secondary-button"
+            (click)="createFolder()"
+            [disabled]="
+              busy() ||
+              !newFolderName.trim()
+            "
+          >
+            Dodaj folder
+          </button>
+        </div>
+
+        <small>
+          Folder ulazi u JSON nakon uspješnog
+          uploada najmanje jedne slike.
+        </small>
+      </div>
+
+
+      <!-- IZBOR FOLDERA -->
+
+      <div class="form-group">
+        <label for="selectedFolder">
+          Izaberite folder
+        </label>
+
+        <select
+          id="selectedFolder"
+          name="selectedFolder"
+          [(ngModel)]="selectedFolder"
+          [disabled]="busy()"
+          required
+        >
+          <option
+            value=""
+            disabled
+          >
+            Izaberite folder
+          </option>
+
+          <option
+            *ngFor="let folder of folders"
+            [value]="folder"
+          >
+            {{ folder }}
+          </option>
+        </select>
+      </div>
+
+
+      <!-- LISTA FOLDERA -->
+
+      <div
+        *ngIf="folders.length > 0"
+        class="folder-list"
+      >
+        <p class="folder-list-title">
+          Dostupni folderi
+        </p>
+
+        <div
+          *ngFor="let folder of folders"
+          class="folder-item"
+          [class.selected]="
+            selectedFolder === folder
+          "
+        >
+          <button
+            type="button"
+            class="folder-select-button"
+            (click)="selectedFolder = folder"
+            [disabled]="busy()"
+          >
+            {{ folder }}
+          </button>
+
+          <button
+            *ngIf="
+              folder.toLowerCase() !==
+              'novosti'
+            "
+            type="button"
+            class="folder-delete-button"
+            aria-label="Ukloni folder iz liste"
+            (click)="deleteFolder(folder)"
+            [disabled]="busy()"
+          >
+            ×
+          </button>
+        </div>
+      </div>
+
+
+      <!-- IZBOR VIŠE SLIKA -->
+
+      <div class="form-group">
+        <label for="photoFiles">
+          Izaberite slike
+        </label>
+
+        <input
+          id="photoFiles"
+          name="photoFiles"
+          type="file"
+          accept="image/jpeg,image/png,image/webp,image/gif"
+          multiple
+          (change)="onFileSelected($event)"
+          [disabled]="busy()"
+        />
+
+        <small
+          *ngIf="
+            selectedFiles().length > 0
+          "
+        >
+          Izabrano slika:
+          {{ selectedFiles().length }}
+        </small>
+      </div>
+
+
+      <!-- PREVIEW SLIKA -->
+
+      <div
+        *ngIf="
+          previewUrls().length > 0
+        "
+        class="preview-section"
+      >
+        <p class="preview-title">
+          Pregled izabranih slika
+        </p>
+
+        <div class="preview-grid">
+          <article
+            *ngFor="
+              let url of previewUrls();
+              let i = index
+            "
+            class="preview-item"
+          >
+            <img
+              [src]="url"
+              [alt]="
+                'Pregled slike ' +
+                (i + 1)
+              "
+              class="image-preview"
+            />
+
+            <p>
+              {{
+                selectedFiles()[i].name
+              }}
+            </p>
+
+            <button
+              type="button"
+              class="remove-image-button"
+              (click)="
+                removeSelectedFile(i)
+              "
+              [disabled]="busy()"
+            >
+              Ukloni
+            </button>
+          </article>
+        </div>
+      </div>
+
+
+      <!-- OPIS -->
+
+      <div class="form-group">
+        <label for="caption">
+          Opis slika
+        </label>
+
+        <textarea
+          id="caption"
+          name="caption"
+          [(ngModel)]="caption"
+          maxlength="500"
+          rows="4"
+          placeholder="Unesite opis"
+          [disabled]="busy()"
+        ></textarea>
+
+        <small>
+          Isti opis će biti dodan svim
+          izabranim slikama.
+        </small>
+      </div>
+
+
+      <!-- UPDATE TOKEN -->
+
+      <div class="form-group">
+        <label for="updateToken">
+          Administratorski token
+        </label>
+
+        <input
+          id="updateToken"
+          name="updateToken"
+          type="password"
+          [(ngModel)]="updateToken"
+          autocomplete="off"
+          placeholder="Unesite UPDATE_TOKEN"
+          [disabled]="busy()"
+          required
+        />
+
+        <small>
+          Token se koristi samo za ažuriranje
+          liste galerija.
+        </small>
+      </div>
+
+
+      <!-- UPLOAD DUGME -->
+
+      <button
+        type="submit"
+        class="upload-button"
+        [disabled]="
+          busy() ||
+          selectedFiles().length === 0 ||
+          !selectedFolder ||
+          !updateToken.trim()
+        "
+      >
+        <ng-container *ngIf="!busy()">
+          Uploaduj
+          {{ selectedFiles().length }}
+          slika
+        </ng-container>
+
+        <ng-container *ngIf="busy()">
+          Uploadovanje...
+        </ng-container>
+      </button>
+
+    </form>
+  </section>
+</main>

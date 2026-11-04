@@ -1,0 +1,54 @@
+<header class="nav">
+
+  <a routerLink="/" class="brand">
+    <img
+      src="/logo.jpg"
+      alt="Džemat Bochum"
+      class="logo"
+    >
+  </a>
+
+  <nav class="nav-links">
+
+    <a routerLink="/">Aktuelnosti</a>
+
+    <a routerLink="/about">
+      O nama
+    </a>
+
+    @if (auth.isLoggedIn()) {
+
+      <a routerLink="/upload">
+        Upload
+      </a>
+
+      <button
+        type="button"
+        (click)="auth.logout()"
+      >
+        Logout
+      </button>
+
+      @if (auth.user()?.picture) {
+        <img
+          class="avatar"
+          [src]="auth.user()?.picture"
+          alt="Profil"
+        >
+      }
+
+    } @else {
+
+      <a routerLink="/login">
+        Sign in with Google
+      </a>
+
+    }
+
+  </nav>
+
+</header>
+
+<main class="shell">
+  <router-outlet></router-outlet>
+</main>

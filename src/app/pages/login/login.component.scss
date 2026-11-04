@@ -1,0 +1,7 @@
+.login-card { max-width: 30rem; margin: 5rem auto; padding: 2rem; border: 1px solid var(--border); border-radius: 1.5rem; background: var(--panel); }
+.login-card h1 { font-size: 3rem; letter-spacing: -.05em; margin: .25rem 0; }
+.login-card p, small { color: var(--muted); }
+.google-button { margin-top: 1.5rem; min-height: 44px; }
+.eyebrow { font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.error { margin-top: 1rem; padding: .75rem; border-radius: .75rem; background: #fef3f2; color: #b42318; font-size: .9rem; }
+.notice { margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--border); font-size: .82rem; line-height: 1.5; }

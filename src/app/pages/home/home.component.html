@@ -1,0 +1,263 @@
+<main class="home-page">
+  <section class="gallery-section">
+
+    <header class="gallery-header">
+      <div>
+        <span class="eyebrow">
+          Džemat Bochum
+        </span>
+
+        <h1>Galerija</h1>
+
+        <p>
+          Izaberite galeriju i pregledajte slike.
+        </p>
+      </div>
+
+      <button
+        type="button"
+        class="reload-button"
+        (click)="reloadAll()"
+        [disabled]="loading"
+      >
+        Osvježi
+      </button>
+    </header>
+
+
+    <!-- IZBOR GALERIJE -->
+
+    <div
+      *ngIf="galleries.length > 0"
+      class="gallery-selector"
+    >
+      <label for="gallerySelect">
+        Izaberite galeriju
+      </label>
+
+      <select
+        id="gallerySelect"
+        [value]="selectedTag"
+        (change)="selectGallery($event)"
+        [disabled]="loading"
+      >
+        <option
+          *ngFor="
+            let gallery of galleries;
+            trackBy: trackGallery
+          "
+          [value]="gallery.tag"
+        >
+          {{ gallery.name }}
+        </option>
+      </select>
+    </div>
+
+
+    <!-- UČITAVANJE -->
+
+    <div
+      *ngIf="loading"
+      class="status-message loading-message"
+    >
+      Učitavanje...
+    </div>
+
+
+    <!-- GREŠKA -->
+
+    <div
+      *ngIf="!loading && errorMessage"
+      class="status-message error-message"
+    >
+      <p>
+        {{ errorMessage }}
+      </p>
+
+      <button
+        type="button"
+        (click)="reloadAll()"
+      >
+        Pokušaj ponovo
+      </button>
+    </div>
+
+
+    <!-- CAROUSEL -->
+
+    <ng-container
+      *ngIf="
+        !loading &&
+        !errorMessage &&
+        currentPhoto as photo
+      "
+    >
+      <section class="carousel">
+        <div class="carousel-stage">
+
+          <button
+            *ngIf="photos.length > 1"
+            type="button"
+            class="carousel-arrow previous"
+            aria-label="Prethodna slika"
+            (click)="previousPhoto()"
+          >
+            ‹
+          </button>
+
+          <button
+            type="button"
+            class="carousel-image-button"
+            aria-label="Otvori sliku u punoj veličini"
+            (click)="openPhoto(photo)"
+          >
+            <img
+              [src]="photo.url"
+              [alt]="photo.caption || 'Fotografija'"
+              class="carousel-image"
+              (error)="imageError($event)"
+            />
+
+            <span class="zoom-hint">
+              Kliknite za punu veličinu
+            </span>
+          </button>
+
+          <button
+            *ngIf="photos.length > 1"
+            type="button"
+            class="carousel-arrow next"
+            aria-label="Sljedeća slika"
+            (click)="nextPhoto()"
+          >
+            ›
+          </button>
+        </div>
+
+        <div class="carousel-details">
+          <p class="photo-counter">
+            {{ currentIndex + 1 }}
+            /
+            {{ photos.length }}
+          </p>
+
+          <h2 *ngIf="photo.caption">
+            {{ photo.caption }}
+          </h2>
+
+          <p
+            *ngIf="
+              photo.userName &&
+              photo.userName !==
+                'Nepoznat korisnik'
+            "
+            class="photo-user"
+          >
+            Objavio:
+            {{ photo.userName }}
+          </p>
+        </div>
+
+        <div
+          *ngIf="photos.length > 1"
+          class="carousel-dots"
+        >
+          <button
+            *ngFor="
+              let carouselPhoto of photos;
+              let i = index;
+              trackBy: trackPhoto
+            "
+            type="button"
+            class="carousel-dot"
+            [class.active]="i === currentIndex"
+            [attr.aria-label]="
+              'Prikaži sliku ' + (i + 1)
+            "
+            (click)="goToPhoto(i)"
+          ></button>
+        </div>
+      </section>
+    </ng-container>
+
+
+    <!-- NEMA SLIKA -->
+
+    <div
+      *ngIf="
+        !loading &&
+        !errorMessage &&
+        photos.length === 0
+      "
+      class="status-message"
+    >
+      Nema pronađenih slika.
+    </div>
+
+  </section>
+</main>
+
+
+<!-- MODAL: PUNA VELIČINA -->
+
+<div
+  *ngIf="selectedPhoto as fullPhoto"
+  class="image-modal"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Slika u punoj veličini"
+  (click)="closePhoto()"
+>
+  <button
+    type="button"
+    class="modal-close"
+    aria-label="Zatvori sliku"
+    (click)="closePhoto()"
+  >
+    ×
+  </button>
+
+  <button
+    *ngIf="photos.length > 1"
+    type="button"
+    class="modal-arrow modal-previous"
+    aria-label="Prethodna slika"
+    (click)="
+      $event.stopPropagation();
+      previousPhoto();
+      openPhoto(currentPhoto!)
+    "
+  >
+    ‹
+  </button>
+
+  <img
+    [src]="getFullSizeUrl(fullPhoto.url)"
+    [alt]="fullPhoto.caption || 'Fotografija'"
+    class="full-image"
+    (click)="$event.stopPropagation()"
+    (error)="imageError($event)"
+  />
+
+  <button
+    *ngIf="photos.length > 1"
+    type="button"
+    class="modal-arrow modal-next"
+    aria-label="Sljedeća slika"
+    (click)="
+      $event.stopPropagation();
+      nextPhoto();
+      openPhoto(currentPhoto!)
+    "
+  >
+    ›
+  </button>
+
+  <div
+    *ngIf="fullPhoto.caption"
+    class="modal-caption"
+    (click)="$event.stopPropagation()"
+  >
+    {{ fullPhoto.caption }}
+  </div>
+</div>

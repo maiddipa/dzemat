@@ -1,0 +1,9 @@
+<section class="login-card">
+  <span class="eyebrow">Google login</span>
+  <h1>Sign in</h1>
+  <p>Koristí google da se pojavis</p>
+  <div #googleButton class="google-button"></div>
+  @if (busy()) { <small>Signing you in…</small> }
+  @if (error()) { <div class="error">{{ error() }}</div> }
+  <p class="notice">This frontend-only login is for app UX. A server is required when authentication must be trusted for protected data or API operations.</p>
+</section>
