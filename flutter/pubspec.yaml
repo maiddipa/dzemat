@@ -21,7 +21,7 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/logo.jpg
+    - lib/screens/assets/logo.jpg
     - lib/screens/assets/Ilmihal1/
     - lib/screens/assets/Ilmihal2/
     - lib/screens/assets/Ilmihal3/
