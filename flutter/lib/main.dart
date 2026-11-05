@@ -7,6 +7,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'firebase_options.dart';
 import 'screens/main_navigation.dart';
+import 'i18n/dzemat_locale_controller.dart';
 
 // Firebase background notifications (must be a top-level function).
 @pragma('vm:entry-point')
@@ -42,6 +43,7 @@ Future<void> main() async {
     debugPrint('Notification opened: ${message.data['galleryTag']}');
   });
 
+  await DzematLocaleController.instance.load();
   runApp(const CloudinaryGalleryApp());
 
   // Keep app launch responsive while registering for notifications.

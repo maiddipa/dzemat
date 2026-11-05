@@ -1,7 +1,7 @@
 name: cloudinary_gallery_flutter
 description: Flutter gallery that loads images from a Cloudinary tag list.
 publish_to: "none"
-version: 1.0.0+1
+version: 1.0.0+2
 
 environment:
   sdk: ">=3.4.0 <4.0.0"
@@ -12,6 +12,8 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^1.6.0
+  shared_preferences: ^2.5.3
+  url_launcher: ^6.3.2
   just_audio: ^0.10.6
   webview_flutter: ^4.14.1
 
@@ -19,7 +21,7 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/logo.jpg
+    - lib/screens/assets/logo.jpg
     - lib/screens/assets/Ilmihal1/
     - lib/screens/assets/Ilmihal2/
     - lib/screens/assets/Ilmihal3/

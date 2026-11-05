@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../i18n/dzemat_locale_controller.dart';
 
 class HomePage extends StatelessWidget {
   final Function(int) onOpenPage;
@@ -10,7 +11,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    final lang=DzematLocaleController.instance;
+    return AnimatedBuilder(animation:lang,builder:(context,_)=>Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -24,7 +26,7 @@ class HomePage extends StatelessWidget {
                 child: Column(
                   children: [
                     Image.asset(
-                      'assets/logo.jpg',
+                      'lib/screens/assets/logo.jpg',
                       height: 170,
                       fit: BoxFit.contain,
                     ),
@@ -57,7 +59,7 @@ class HomePage extends StatelessWidget {
                   children: [
                     // DEŠAVANJA
                     _menuCard(
-                      title: 'Dešavanja',
+                      title: lang.t('news'),
                       icon: Icons.event,
                       onTap: () => onOpenPage(1),
                     ),
@@ -85,7 +87,7 @@ class HomePage extends StatelessWidget {
 
                     // O NAMA
                     _menuCard(
-                      title: 'O nama',
+                      title: lang.t('about'),
                       icon: Icons.mosque,
                       onTap: () => onOpenPage(5),
                     ),
@@ -98,7 +100,7 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ));
   }
 
   Widget _menuCard({

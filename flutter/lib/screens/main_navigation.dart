@@ -6,6 +6,8 @@ import 'sufara_page.dart';
 import 'mekteb_page.dart';
 import 'quran_page.dart';
 import 'about_page.dart';
+import '../i18n/dzemat_locale_controller.dart';
+import '../widgets/dzemat_language_switcher.dart';
 
 class MainNavigation extends StatefulWidget {
   const MainNavigation({super.key});
@@ -38,7 +40,10 @@ class _MainNavigationState extends State<MainNavigation> {
       const AboutPage(),
     ];
 
-    return Scaffold(
+    return AnimatedBuilder(
+      animation: DzematLocaleController.instance,
+      builder: (context, _) => Scaffold(
+      appBar: AppBar(title: const Text('Džemat Bochum'), actions: const [DzematLanguageSwitcher()]),
       body: pages[_currentIndex],
 
       bottomNavigationBar: SafeArea(
@@ -60,14 +65,14 @@ class _MainNavigationState extends State<MainNavigation> {
                 index: 0,
                 icon: Icons.home_outlined,
                 selectedIcon: Icons.home,
-                label: 'Home',
+                label: DzematLocaleController.instance.t('home'),
               ),
 
               _bottomItem(
                 index: 1,
                 icon: Icons.event_outlined,
                 selectedIcon: Icons.event,
-                label: 'Ahtuelnosti',
+                label: DzematLocaleController.instance.t('news'),
               ),
 
               _bottomItem(
@@ -95,13 +100,13 @@ class _MainNavigationState extends State<MainNavigation> {
                 index: 5,
                 icon: Icons.mosque_outlined,
                 selectedIcon: Icons.mosque,
-                label: 'O nama',
+                label: DzematLocaleController.instance.t('about'),
               ),
             ],
           ),
         ),
       ),
-    );
+    ));
   }
 
   Widget _bottomItem({
