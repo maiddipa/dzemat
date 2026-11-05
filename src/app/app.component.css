@@ -44,3 +44,6 @@
   background: none;
   cursor: pointer;
 }
+.nav{height:auto;min-height:70px;flex-wrap:wrap;gap:12px;padding:12px 20px}
+.nav-links{flex-wrap:wrap;gap:12px}
+.legal-footer{display:flex;justify-content:center;gap:22px;padding:20px;background:#f4f7f5}

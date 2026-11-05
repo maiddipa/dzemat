@@ -1,3 +1,4 @@
+import { DzematI18nService } from '../../shared/dzemat-i18n.service';
 import {
   ChangeDetectorRef,
   Component,
@@ -80,7 +81,8 @@ export class HomeComponent
   constructor(
     private readonly http: HttpClient,
     private readonly photoService: PhotoService,
-    private readonly changeDetector: ChangeDetectorRef
+    private readonly changeDetector: ChangeDetectorRef,
+    readonly i18n: DzematI18nService
   ) {}
 
   ngOnInit(): void {

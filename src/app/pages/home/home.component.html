@@ -7,10 +7,10 @@
           Džemat Bochum
         </span>
 
-        <h1>Galerija</h1>
+        <h1>{{i18n.t('gallery')}}</h1>
 
         <p>
-          Izaberite galeriju i pregledajte slike.
+          {{i18n.t('galleryIntro')}}
         </p>
       </div>
 
@@ -20,7 +20,7 @@
         (click)="reloadAll()"
         [disabled]="loading"
       >
-        Osvježi
+        {{i18n.t('refresh')}}
       </button>
     </header>
 
@@ -32,7 +32,7 @@
       class="gallery-selector"
     >
       <label for="gallerySelect">
-        Izaberite galeriju
+        {{i18n.t('gallerySelect')}}
       </label>
 
       <select
@@ -60,7 +60,7 @@
       *ngIf="loading"
       class="status-message loading-message"
     >
-      Učitavanje...
+      {{i18n.t('loading')}}
     </div>
 
 
@@ -78,7 +78,7 @@
         type="button"
         (click)="reloadAll()"
       >
-        Pokušaj ponovo
+        {{i18n.t('retry')}}
       </button>
     </div>
 
@@ -119,7 +119,7 @@
             />
 
             <span class="zoom-hint">
-              Kliknite za punu veličinu
+              {{i18n.t('zoom')}}
             </span>
           </button>
 
@@ -153,7 +153,7 @@
             "
             class="photo-user"
           >
-            Objavio:
+            {{i18n.t('publishedBy')}}
             {{ photo.userName }}
           </p>
         </div>
@@ -191,7 +191,7 @@
       "
       class="status-message"
     >
-      Nema pronađenih slika.
+      {{i18n.t('noPhotos')}}
     </div>
 
   </section>
